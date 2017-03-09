@@ -652,9 +652,6 @@ function! s:find_solution_files() abort
       if g:OmniSharp_server_type ==# 'roslyn'
         let solution_files += s:globpath(dir, 'project.json')
       endif
-      if len(glob(dir . '/*.csproj', 0, 1)) > 0
-          let solution_files += [dir]
-      endif
     endif
 
     if g:OmniSharp_server_type ==# 'roslyn' && g:OmniSharp_prefer_global_sln
@@ -671,7 +668,7 @@ function! s:find_solution_files() abort
   endwhile
 
   if empty(solution_files) && g:OmniSharp_start_without_solution
-    let solution_files = ['.']
+    let solution_files = [getcwd()]
   endif
 
   return solution_files
