@@ -652,8 +652,9 @@ function! s:find_solution_files() abort
       if g:OmniSharp_server_type ==# 'roslyn'
         let solution_files += s:globpath(dir, 'project.json')
       endif
-
-      call filter(solution_files, 'filereadable(v:val)')
+      if len(glob(dir . '/*.csproj', 0, 1)) > 0
+          let solution_files += [dir]
+      endif
     endif
 
     if g:OmniSharp_server_type ==# 'roslyn' && g:OmniSharp_prefer_global_sln
